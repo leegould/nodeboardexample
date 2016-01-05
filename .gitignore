@@ -38,3 +38,6 @@ bower_components
 
 # mongo
 mongodb
+
+# webstorm
+.idea
