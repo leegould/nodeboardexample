@@ -20,6 +20,10 @@ app.use(flash());
 // add public static files dir
 app.use(express.static(__dirname + "/public"));
 
+// use Auth
+var auth = require("./auth");
+auth.init(app);
+
 // map the routes
 controllers.init(app);
 

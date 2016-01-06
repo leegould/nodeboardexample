@@ -1,20 +1,22 @@
 (function (homeController){
 
     var data = require("../data");
+    var auth = require("../auth")
 
     homeController.init = function (app) {
 
       app.get("/", function(req, res){
           data.getNoteCategories(function(err, results){
 
-              res.render("index", {title: "The Board", error: err, categories: results, newCatError: req.flash("newCatName")});
+              res.render("index", {title: "The Board", error: err, categories: results, newCatError: req.flash("newCatName"), user: req.user});
 
           })
       });
 
-        app.get("/notes/:caegoryName", function(req, res){
+        app.get("/notes/:caegoryName", auth.ensureAuthenticated, function(req, res){
+
             var categoryName = req.params.categoryName;
-            res.render("notes", {title: categoryName});
+            res.render("notes", {title: categoryName, user: req.user});
         });
 
         app.post("/newCategory", function(req, res){
